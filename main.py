@@ -165,11 +165,11 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
                 "color": get_color()
             },
             "birthday1": {
-                "value": birthday1,
+                "value": "",
                 "color": get_color()
             },
             "birthday2": {
-                "value": birthday2,
+                "value": "",
                 "color": get_color()
             # },
             # "note_en": {
