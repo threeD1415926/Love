@@ -62,7 +62,6 @@ def get_weather(region):
  
  
 def get_birthday(birthday, year, today):
-    print("birthday:" + birthday)
     birthday_year = birthday.split("-")[0]
     # 判断是否为农历生日
     if birthday_year[0] == "r":
@@ -79,9 +78,7 @@ def get_birthday(birthday, year, today):
         birthday_day = birthday.day
         # 今年生日
         year_date = date(year, birthday_month, birthday_day)
- 
     else:
-        print("计算国历生日")
         # 获取国历生日的今年对应月和日
         birthday_month = int(birthday.split("-")[1])
         birthday_day = int(birthday.split("-")[2])
@@ -101,7 +98,6 @@ def get_birthday(birthday, year, today):
     else:
         birth_date = year_date
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
-    print("计算完成：" + birth_day)
     return birth_day
  
  
@@ -126,6 +122,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     day = localtime().tm_mday
     today = datetime.date(datetime(year=year, month=month, day=day))
     week = week_list[today.isoweekday() % 7]
+    print("week:" + week)
     # 获取在一起的日子的日期格式
     love_year = int(config["love_date"].split("-")[0])
     love_month = int(config["love_date"].split("-")[1])
@@ -181,13 +178,13 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     for key, value in birthdays.items():
         # 获取距离下次生日的时间
         birth_day = get_birthday(value["birthday"], year, today)
+        print("开始导入birth_day:" + birth_day)
         if birth_day == 0:
             birthday_data = "今天{}生日哦，祝{}生日快乐！".format(value["name"], value["name"])
         else:
             birthday_data = "距离{}的生日还有{}天".format(value["name"], birth_day)
         # 将生日数据插入data
         data["data"][key] = {"value": birthday_data, "color": get_color()}
-        print("key:" + key + "   value:" + value)
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
